@@ -1,0 +1,60 @@
+version: '3.3'
+
+services:
+
+  ui:
+    container_name: ui
+    image: ui:dev
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    ports:
+      - mode: host
+        target: 8080
+        published: 8080
+        protocol: tcp
+    volumes:
+      - ./ui:/app
+      - type: volume
+        target: /app/node_modules
+    depends_on:
+      - core-api
+    networks:
+      - core-dev
+
+  core-api:
+    container_name: core-api
+    image: core-api:dev
+    build:
+      context: ./core-api
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:5000
+    ports:
+      - mode: host
+        target: 5000
+        published: 5000
+        protocol: tcp
+    networks:
+      - core-dev
+
+  nginx:
+    container_name: nginx
+    image: nginx:dev
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - DOMAIN=localhost
+    ports:
+      - 80:80
+    depends_on:
+      - ui
+      - core-api
+    networks:
+      - core-dev
+
+networks:
+  core-dev:
