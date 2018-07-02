@@ -6,7 +6,7 @@ services:
     container_name: ui
     image: ui:dev
     build:
-      context: ./ui
+      context: ./vue-ui
       dockerfile: Dockerfile
     ports:
       - mode: host
@@ -14,7 +14,7 @@ services:
         published: 8080
         protocol: tcp
     volumes:
-      - ./ui:/app
+      - ./vue-ui:/app
       - type: volume
         target: /app/node_modules
     depends_on:
