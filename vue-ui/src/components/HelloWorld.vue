@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { getValues } from '../services/api'
+import { getTodos } from '../services/api'
 
 export default {
   name: 'HelloWorld',
@@ -47,8 +47,8 @@ export default {
     msg: String
   },
   async mounted () {
-    const response = await getValues()
-    this.values = response.data    
+    const response = await getTodos()
+    this.values = response.data
   }
 }
 </script>

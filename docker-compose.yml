@@ -1,6 +1,18 @@
 version: '3.3'
 
 services:
+  db:
+    container_name: db
+    image: microsoft/mssql-server-linux
+    environment:
+      SA_PASSWORD: "Your_password123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - 1433:1433
+    volumes:
+      - ms-sqlserver-data:/var/opt/mssql
+    networks:
+      - core-dev
 
   ui:
     container_name: ui
@@ -31,6 +43,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:5000
+    depends_on:
+      - db
     ports:
       - mode: host
         target: 5000
@@ -58,3 +72,7 @@ services:
 
 networks:
   core-dev:
+
+volumes:
+  ms-sqlserver-data:
+    driver: local
