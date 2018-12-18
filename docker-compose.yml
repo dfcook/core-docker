@@ -10,7 +10,7 @@ services:
     ports:
       - 1433:1433
     volumes:
-      - ms-sqlserver-data:/var/opt/mssql
+      - ./db/data:/var/opt/mssql
     networks:
       - core-dev
 
@@ -72,7 +72,3 @@ services:
 
 networks:
   core-dev:
-
-volumes:
-  ms-sqlserver-data:
-    driver: local

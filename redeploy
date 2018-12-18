@@ -1,3 +1,2 @@
 docker-compose down
-sudo rm -rf ./data/db
 docker-compose up -d --build
