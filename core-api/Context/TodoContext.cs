@@ -1,15 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-using core_api.Model;
+using CoreApi.Model;
 
-namespace core_api.Context
+namespace CoreApi.Context
 {
   public class TodoContext : DbContext
   {
     public TodoContext(DbContextOptions<TodoContext> options)
         : base(options)
     {
+      Database.EnsureCreated();
     }
 
     public virtual DbSet<Todo> Todos { get; set; }
@@ -18,15 +19,11 @@ namespace core_api.Context
     {
       modelBuilder.Entity<Todo>(entity =>
       {
-        entity.Property(e => e.Id).IsRequired();
         entity.Property(e => e.Text).IsRequired();
-        entity.Property(e => e.UserId).IsRequired().HasDefaultValue("baz");
+        entity.Property(e => e.IsCompleted).IsRequired();
+        entity.Property(e => e.UserId).IsRequired();
 
         entity.HasKey(e => e.Id);
-
-        entity.HasData(
-          new Todo { Id = 3, Text = "Baz", UserId = "baz" }
-        );
       });
     }
   }

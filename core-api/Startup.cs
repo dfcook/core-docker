@@ -11,9 +11,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
-using core_api.Context;
+using CoreApi.Context;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
-namespace core_api
+namespace CoreApi
 {
   public class Startup
   {
@@ -27,10 +29,22 @@ namespace core_api
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddMvc();
-
       services.AddDbContext<TodoContext>(
         options => options.UseSqlServer("Server=db;User=sa;Password=Your_password123;Database=ef;"));
+
+      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+      services.Configure<CookiePolicyOptions>(options =>
+      {
+        options.CheckConsentNeeded = context => false;
+        options.MinimumSameSitePolicy = SameSiteMode.None;
+      });
+
+      services.AddDistributedMemoryCache();
+      services.AddSession(options =>
+      {
+        options.Cookie.HttpOnly = true;
+      });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,7 +54,13 @@ namespace core_api
       {
         app.UseDeveloperExceptionPage();
       }
+      else
+      {
+        app.UseHsts();
+      }
 
+      app.UseSession();
+      app.UseHttpsRedirection();
       app.UseMvc();
     }
   }
