@@ -5,7 +5,9 @@ import mutations from './mutations'
 
 const createStore = () => new Vuex.Store({
   state: {
-    todos: []
+    todos: [],
+    todosLoading: false,
+    filter: 'ACTIVE'
   },
   actions,
   mutations

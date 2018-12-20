@@ -11,9 +11,13 @@ export const getTodos = async () => {
 }
 
 export const createTodo = async (todo) => {
-  const response = await http.post(`/api/Todo`, todo)
+  const response = await http.post('/api/Todo', todo)
   return response.data
 }
 
-export const updateTodo = async (todo) => http.put(`/api/Todo/${todo.id}`, todo)
-export const deleteTodo = async (todo) => http.delete(`/api/Todo/${todo.id}`)
+export const updateTodo = async (todo) => {
+  const response = await http.put(`/api/Todo/${todo.id}`, todo)
+  return response.data
+}
+
+export const deleteTodo = async (id) => await http.delete(`/api/Todo/${id}`)

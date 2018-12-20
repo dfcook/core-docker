@@ -1,25 +1,23 @@
 <template>
   <v-app id="app">
-    <v-container>
+    <v-container
+      justify-center
+      align-center
+    >
       <v-layout>
-        <v-flex 
-          xs8 
-          offset-xs2 
+        <v-flex
+          xs12
           text-xs-center>
           <h1>Things To Do</h1>
         </v-flex>
       </v-layout>
       <v-layout>
-        <v-flex 
-          xs8 
-          offset-xs2>
+        <v-flex xs12>
           <TodoForm />
         </v-flex>
       </v-layout>
       <v-layout>
-        <v-flex 
-          xs8 
-          offset-xs2>
+        <v-flex xs12>
           <TodoList />
         </v-flex>
       </v-layout>
@@ -39,3 +37,19 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+h1 {
+  width: 100%;
+  font-size: 70px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 100px;
+  color: #b3b3b3;
+  text-shadow: -1px -1px rgba(0, 0, 0, 0.2);
+}
+
+#app {
+  background-color: #eaeaea;
+}
+</style>

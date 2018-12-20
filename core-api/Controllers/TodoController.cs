@@ -97,7 +97,7 @@ namespace CoreApi.Controllers
       _context.Entry(todo).State = EntityState.Modified;
       await _context.SaveChangesAsync();
 
-      return NoContent();
+      return todo;
     }
 
     [HttpPost]

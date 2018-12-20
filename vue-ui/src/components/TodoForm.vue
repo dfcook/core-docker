@@ -1,13 +1,9 @@
 <template>
-  <v-form 
-    v-model="valid" 
-    prevent-default>
-    <v-text-field
-      v-model="todo"
-      label="Thing to do"
-    />
-    <v-btn @click="submit">Create</v-btn>
-  </v-form>
+  <v-text-field
+    v-model="todo"
+    label="What needs to be done?"
+    @keyup="onKeyUp"
+  />
 </template>
 
 <script>
@@ -22,8 +18,11 @@ export default {
   },
   methods: {
     ...mapActions(['addTodo']),
-    submit () {
-      this.addTodo(this.todo)
+    onKeyUp (e) {
+      if (e.key === 'Enter') {
+        this.addTodo(this.todo);
+        this.todo = '';
+      }
     }
   }
 }
