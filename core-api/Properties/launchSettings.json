@@ -1,0 +1,21 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:61395/",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "core-api": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SECRET_KEY": "08826DEF-5B39-4158-B51A-0E78133E08FC"
+      },
+      "applicationUrl": "http://localhost:61396/"
+    }
+  }
+}

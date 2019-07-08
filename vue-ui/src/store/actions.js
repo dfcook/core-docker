@@ -7,7 +7,7 @@ import {
   UPDATE_FILTER
 } from './mutations'
 
-import * as api from '../services/api'
+import * as api from '../services/todos'
 
 export default {
   async addTodo ({ commit }, thingToDo) {

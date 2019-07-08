@@ -16,4 +16,4 @@ WORKDIR /app
 
 COPY --from=build /app/out .
 
-ENTRYPOINT ["dotnet", "core-api.dll"]
+ENTRYPOINT ["dotnet", "core-logging.dll"]

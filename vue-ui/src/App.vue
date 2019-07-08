@@ -7,17 +7,27 @@
       <v-layout>
         <v-flex
           xs12
+          lg6
+          offset-lg3
           text-xs-center>
           <h1>Things To Do</h1>
         </v-flex>
       </v-layout>
       <v-layout>
-        <v-flex xs12>
+        <v-flex
+          lg6
+          offset-lg3
+          xs12
+        >
           <TodoForm />
         </v-flex>
       </v-layout>
       <v-layout>
-        <v-flex xs12>
+        <v-flex
+          lg6
+          offset-lg3
+          xs12
+        >
           <TodoList />
         </v-flex>
       </v-layout>

@@ -1,19 +1,6 @@
 version: '3.3'
 
 services:
-  db:
-    container_name: db
-    image: microsoft/mssql-server-linux
-    environment:
-      SA_PASSWORD: "Your_password123"
-      ACCEPT_EULA: "Y"
-    ports:
-      - 1433:1433
-    volumes:
-      - ./db/data:/var/opt/mssql
-    networks:
-      - core-dev
-
   ui:
     container_name: ui
     image: ui:dev
@@ -32,7 +19,7 @@ services:
     depends_on:
       - core-api
     networks:
-      - core-dev
+      - core-docker
 
   core-api:
     container_name: core-api
@@ -42,33 +29,59 @@ services:
       dockerfile: Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:5000
+      - ASPNETCORE_URLS=http://0.0.0.0:61396
+      - SECRET_KEY=08826DEF-5B39-4158-B51A-0E78133E08FC
     depends_on:
-      - db
+      - core-auth
+      - core-logging
     ports:
       - mode: host
-        target: 5000
-        published: 5000
+        target: 61396
+        published: 61396
         protocol: tcp
     networks:
-      - core-dev
+      - core-docker
 
-  nginx:
-    container_name: nginx
-    image: nginx:dev
+  core-logging:
+    container_name: core-logging
+    image: core-logging:dev
     build:
-      context: nginx
+      context: ./core-logging
       dockerfile: Dockerfile
-    restart: always
     environment:
-      - DOMAIN=localhost
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:1969
+    volumes:
+      - ./logs:/logs
     ports:
-      - 80:80
-    depends_on:
-      - ui
-      - core-api
+      - mode: host
+        target: 1969
+        published: 1969
+        protocol: tcp
     networks:
-      - core-dev
+      - core-docker
+
+  core-auth:
+    container_name: core-auth
+    image: core-auth:dev
+    build:
+      context: ./core-auth
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:53180
+      - SECRET_KEY=08826DEF-5B39-4158-B51A-0E78133E08FC
+    depends_on:
+      - core-logging
+    volumes:
+      - ./logs:/logs
+    ports:
+      - mode: host
+        target: 53180
+        published: 53180
+        protocol: tcp
+    networks:
+      - core-docker
 
 networks:
-  core-dev:
+  core-docker:
